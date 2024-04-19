@@ -12,7 +12,7 @@ This project is a simple ASCII Art Generator implemented in Go. It exposes two e
 
 ### Prerequisites
 
-Go (version 1.16 or later)
+- Docker (version 20.10 or later)
 
 ### How to Run
 
@@ -28,10 +28,28 @@ Go (version 1.16 or later)
    cd ascii-art-web
    ```
 
-3. Run the server
+3. Build the Docker image
 
       ``` bash
-      go run .
+      docker build -t ascii-art-web .
+      ```
+
+4. Run the Docker container
+
+      ``` bash
+      docker run -p 8080:8080 ascii-art-web
+      ```
+
+   to run the container in the background, add the `-d` flag
+
+      ``` bash
+      docker run -d --name aaw-container -p 8080:8080 ascii-art-web
+      ```
+
+   to stop the container use the following command
+
+      ``` bash
+      docker stop aaw-container
       ```
 
    The server runs on port 8080 and has two endpoints:
