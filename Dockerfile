@@ -1,6 +1,11 @@
 # Use the latest version of the official Golang image as the base image for building
 FROM golang:latest AS builder
 
+# Metadata
+LABEL ascii-art-web-dockerize.institute="reboot01"
+LABEL ascii-art-web-dockerize.team="Hasan Dhaif / Ahmed Alhamed"
+LABEL ascii-art-web-dockerize.date="Apr 2023"
+
 # Set the working directory inside the Docker container to /app
 WORKDIR /app
 
