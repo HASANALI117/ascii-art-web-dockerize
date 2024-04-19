@@ -13,6 +13,9 @@ RUN CGO_ENABLED=0 go build -o main .
 # Use a smaller base image for running the application
 FROM alpine:latest AS production
 
+# Install bash
+RUN apk add --no-cache bash
+
 # Set the working directory inside the Docker container to /app
 WORKDIR /app
 
