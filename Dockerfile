@@ -1,5 +1,5 @@
-# Use the latest version of the official Golang image as the base image
-FROM golang:latest
+# Use the latest version of the official Golang image as the base image for building
+FROM golang:latest AS builder
 
 # Set the working directory inside the Docker container to /app
 WORKDIR /app
@@ -8,10 +8,19 @@ WORKDIR /app
 COPY . .
 
 # Build the Go application. The resulting binary will be named "main"
-RUN go build -o main .
+RUN CGO_ENABLED=0 go build -o main .
+
+# Use a smaller base image for running the application
+FROM alpine:latest AS production
+
+# Set the working directory inside the Docker container to /app
+WORKDIR /app
+
+# Copy the binary from the builder stage to the current stage
+COPY --from=builder /app /app
 
 # Inform Docker that the container is listening on port 8080 at runtime
 EXPOSE 8080
 
 # Specify the command to run when the Docker container starts up ("/app/main")
-ENTRYPOINT [ "/app/main" ]
+CMD [ "/app/main" ]
